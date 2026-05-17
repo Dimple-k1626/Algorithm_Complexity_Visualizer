@@ -1,21 +1,9 @@
 services:
   - type: web
-    name: algo-visualizer-backend
+    name: algo-visualizer
     env: python
-    buildCommand: "pip install -r backend/requirements.txt"
+    buildCommand: "cd frontend && npm install && npm run build && cd ../backend && pip install -r requirements.txt"
     startCommand: "cd backend && gunicorn app:app"
     envVars:
       - key: PYTHON_VERSION
         value: "3.10.0"
-
-  - type: web
-    name: algo-visualizer-frontend
-    env: static
-    buildCommand: "cd frontend && npm install && npm run build"
-    staticPublishPath: "./frontend/dist"
-    envVars:
-      - key: VITE_API_URL
-        fromService:
-          name: algo-visualizer-backend
-          type: web
-          envVarKey: RENDER_EXTERNAL_URL

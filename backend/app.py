@@ -1,6 +1,7 @@
 import time
 import math
-from flask import Flask, request, jsonify, send_file
+import os
+from flask import Flask, request, jsonify, send_file, send_from_directory
 from flask_cors import CORS
 
 from algorithms.search import linear_search, binary_search
@@ -8,9 +9,17 @@ from algorithms.sort import bubble_sort, merge_sort, quick_sort
 from utils.generator import generate_test_data
 from utils.pdf_report import generate_pdf
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='../frontend/dist', static_url_path='')
 # Enable CORS so the React frontend can make requests
 CORS(app)
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:path>')
+def serve_frontend(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
 # Limit O(n^2) algorithms to prevent server hang
 MAX_O_N_SQUARED_SIZE = 10000

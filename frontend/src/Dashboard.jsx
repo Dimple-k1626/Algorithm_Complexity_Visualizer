@@ -16,7 +16,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000';
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export default function Dashboard() {
   const [algorithms, setAlgorithms] = useState(['bubble', 'merge']);
