@@ -8,8 +8,9 @@ services:
       - key: PYTHON_VERSION
         value: "3.10.0"
 
-  - type: static-site
+  - type: web
     name: algo-visualizer-frontend
+    env: static
     buildCommand: "cd frontend && npm install && npm run build"
     staticPublishPath: "./frontend/dist"
     envVars:
